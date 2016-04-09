@@ -1,6 +1,6 @@
 #/usr/bin/env python
 # -*- coding:utf-8 -*-
-from flask import Flask, request, abort, redirect
+from flask import Flask, request, url_for, redirect
 app = Flask(__name__)
 
 @app.route('/coucou/')
@@ -23,17 +23,20 @@ def mon_chat(num_page = 1):
     dernier_msg = premier_msg + 50
     return 'affichage des messages {} à {}'.format(premier_msg, dernier_msg)
 
-@app.route('/profil/')
+@app.route('/profil')
 def profil():
     if utilisateur_non_identifie:
-        abort(401)
+        return redirect(url_for('page_de_login'))
     return "Vous êtes bien identifié, voici la page demandée : ..."
-
+    
+@app.route('/login')
+def page_de_login():
+    return "yes"
 @app.route('/test/')
 def test():
     return "<h1>test</h1>"
 
-@app.route('/google/')
+@app.route('/google')
 def redirection_google():
     return redirect('http://www.google.fr')
 
